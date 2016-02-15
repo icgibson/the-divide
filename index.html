@@ -1,0 +1,67 @@
+<html>
+	<head>
+		<TITLE>The Divide</TITLE>
+		<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+		<script type="text/javascript">
+		
+			var socket = io.connect('http://icg226.itp.io:8080/');
+			
+			socket.on('connect', function() {
+				console.log("Connected");
+			});
+
+			socket.on('chatmessage', function (data) {
+				
+				document.getElementById('messages').innerHTML = "" + data + "\n<br />" + "" + document.getElementById('messages').innerHTML;
+				
+			});
+			
+
+			var sendmessage = function(message) {
+				console.log("chatmessage: " + message);
+				socket.emit('chatmessage', message);
+			};
+
+		</script>
+
+		<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600' rel='stylesheet' type='text/css'>
+		
+		<style>
+			html { 
+  				background-color: black;
+			}
+			body {
+				width: 75%;
+				margin-left: auto;
+				margin-right: auto;
+				margin-top: 50px;
+				margin-bottom: 50px;
+				padding: 10px 20px 20px 20px;
+				font-family: 'Open Sans', sans-serif;
+				color: white;
+			}
+			h1 {
+				font-size: 40pt;
+			}
+			#spacer {
+				height: 25px;
+			}
+			a:link {
+				color: #090;
+			}
+		</style>	
+
+	</head>
+ <body>
+
+ 	<h1>THE DIVIDE</h1>
+ 	
+ 	<input type="text" id="message" name="message">
+ 	<input type="submit" id="button" value="Yell across the divide" onclick="sendmessage(document.getElementById('message').value);">
+ 
+ 	<div id="spacer"></div>
+  	
+  	<div id="messages">
+ 	</div>
+ </body>
+</html>
